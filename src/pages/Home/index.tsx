@@ -26,11 +26,10 @@ const Home = (): JSX.Element => {
   const { addProduct, cart } = useCart();
 
   const cartItemsAmount = cart.reduce((sumAmount, product) => {
-    sumAmount = {
-      [product.id] : product.amount,
-    }
+    const newSumAmount = {...sumAmount};
+    newSumAmount[product.id] = product.amount;
 
-    return sumAmount;
+    return newSumAmount;
   }, {} as CartItemsAmount)
 
 
@@ -52,7 +51,7 @@ const Home = (): JSX.Element => {
     <ProductList>
       {products.map(product => {
         return (
-          <li>
+          <li key={product.id}>
             <img src={product.image} alt={product.title} />
             <strong>{product.title}</strong>
             <span>{formatPrice(product.price)}</span>
